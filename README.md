@@ -1,7 +1,7 @@
 # astra-test-dhika-ade-putra Employee
 
 - implement HTOAS
-- Rest APi Dedocumentation
+- Rest API Dedocumentation
 - Exception Handling
 - Unit Test
 
@@ -29,6 +29,6 @@ spring.datasource.driver-class-name =com.mysql.cj.jdbc.Driver
 mvnw spring-boot:run
 ```
 
-# Rest APi Documentation
+# Rest API Documentation
 [https://documenter.getpostman.com/view/26705744/2s93mBwJbB]()
 
