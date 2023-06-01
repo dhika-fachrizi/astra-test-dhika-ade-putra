@@ -4,6 +4,7 @@ import com.dhika.astralife.entity.EmployeeEntity;
 import com.dhika.astralife.model.DepartmentModel;
 import com.dhika.astralife.model.EmployeeModel;
 import com.dhika.astralife.model.GenderEnumModel;
+import com.dhika.astralife.model.SalaryModel;
 import com.dhika.astralife.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -47,6 +48,13 @@ public class AstralifeApplication implements CommandLineRunner {
 					.birthDate(new SimpleDateFormat("yyyy-MM-dd").parse("1996-08-12"))
 					.build();
 			employeeService.createEmployee(employee);
+
+			SalaryModel salaryModel = SalaryModel.builder()
+					.salary(10000000)
+					.fromDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-02-28"))
+					.toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-02-28"))
+					.build();
+			salaryService.createSalaryByEmployee(employee.getEmployeeNo(),salaryModel);
 		}
 
 		if (departmentService.getAllDepartment().size() == 0){
@@ -56,6 +64,7 @@ public class AstralifeApplication implements CommandLineRunner {
 					.build();
 			departmentService.createDepartment(departmentModel);
 		}
+
 
 
 
