@@ -23,6 +23,8 @@ spring.datasource.driver-class-name =com.mysql.cj.jdbc.Driver
 
 # How To Run
 
+- RUN YOU DATABASE SERVICE 
+- Run 
 ```mvn
 mvnw spring-boot:run
 ```
