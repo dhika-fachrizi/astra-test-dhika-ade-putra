@@ -1,5 +1,6 @@
 package com.dhika.astralife.assembers;
 
+import com.dhika.astralife.controller.DepartmentController;
 import com.dhika.astralife.controller.EmployeeController;
 import com.dhika.astralife.entity.DepartmentManagerEntity;
 import com.dhika.astralife.model.DepartmentManagerModel;
@@ -43,8 +44,8 @@ public class DepartmentManagerModelAssembler extends RepresentationModelAssemble
                     .withRel("employee"));
 
             departmentManagerModel.add(linkTo(
-                    methodOn(EmployeeController.class)
-                            .doGetEmployee(entity.getEmployee().getEmployeeNo()))
+                    methodOn(DepartmentController.class)
+                            .doGetDepartment(entity.getDepartment().getDepartmentNo()))
                     .withRel("department"));
 
             return departmentManagerModel;

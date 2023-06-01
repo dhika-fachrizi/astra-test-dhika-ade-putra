@@ -83,7 +83,7 @@ Init data when running the application
             "href": "http://localhost:8083/employee/1/department/A001"
         },
         {
-            "rel": "department_employee",
+            "rel": "department_manager",
             "href": "http://localhost:8083/employee/1/manager/A001"
         }
     ]

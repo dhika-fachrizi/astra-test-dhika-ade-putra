@@ -52,7 +52,7 @@ public class DepartmentModelAssembler extends RepresentationModelAssemblerSuppor
                     departmentModel.add(linkTo(
                             methodOn(EmployeeController.class)
                                     .doGetManager(entity.getDeptManager().get(0).getEmployee().getEmployeeNo(), entity.getDepartmentNo()))
-                            .withRel("department_employee"));
+                            .withRel("department_manager"));
                 }
             }
             return departmentModel;
