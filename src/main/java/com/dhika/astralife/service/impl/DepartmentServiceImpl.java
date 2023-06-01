@@ -51,7 +51,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentEntity updateDepartment(String id, DepartmentModel request){
         DepartmentEntity department = checkDepartment(id);
-        department.setDepartmentName(request.getDepartmentName());
+
+        if (request.getDepartmentName() != null)
+            department.setDepartmentName(request.getDepartmentName());
 
         return departmentRepository.save(department);
     }

@@ -1,9 +1,7 @@
 package com.dhika.astralife;
 
 import com.dhika.astralife.entity.EmployeeEntity;
-import com.dhika.astralife.model.EmployeeModel;
-import com.dhika.astralife.model.GenderEnumModel;
-import com.dhika.astralife.model.SalaryModel;
+import com.dhika.astralife.model.*;
 import com.dhika.astralife.repository.EmployeeRepository;
 import com.dhika.astralife.service.*;
 import com.dhika.astralife.service.impl.EmployeeServiceImpl;
@@ -42,6 +40,7 @@ public class EmployeeEndpointTests {
 
     private EmployeeModel employee;
 
+    private DepartmentModel department;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -61,11 +60,15 @@ public class EmployeeEndpointTests {
                 .build();
         this.employee = employee;
 
+        DepartmentModel department = DepartmentModel.builder()
+                .departmentNo("A006")
+                .departmentName("Infra")
+                .build();
+        this.department = department;
     }
 
     @Test
     public void doGetAllEmployee_success() throws Exception {
-
         MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.get("/employee/all")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -76,7 +79,6 @@ public class EmployeeEndpointTests {
 
     @Test
     public void doGetEmployee_success() throws Exception {
-
         MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.get("/employee/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -131,8 +133,8 @@ public class EmployeeEndpointTests {
     public void doAddSalaryEmployee() throws Exception {
         SalaryModel salaryModel = SalaryModel.builder()
                 .salary(10000000)
-                .fromDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-05-28"))
-                .toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-06-28"))
+                .fromDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-07-28"))
+                .toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-08-28"))
                 .build();
 
         MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.post("/employee/1/salary")
@@ -155,6 +157,200 @@ public class EmployeeEndpointTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(salaryModel));
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void doGetTitleEmployee_success() throws Exception {
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.get("/employee/1/title")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+    }
+
+    @Test
+    public void doGetAllTitleEmployee_success() throws Exception {
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.get("/employee/1/title/all")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+    }
+
+    @Test
+    public void doAddTitleEmployee() throws Exception {
+
+        TitleModel titleModel = TitleModel.builder()
+                .title("SV Programmer")
+                .fromDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-07-28"))
+                .toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-08-28"))
+                .build();
+
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.post("/employee/1/title")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(titleModel));
+
+        mockMvc.perform(mockReq).andExpect(status().isCreated());
+    }
+
+    @Test
+    public void doUpdateCurrentTitleEmployee_success() throws Exception {
+
+        TitleModel titleModel = TitleModel.builder()
+                .toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-05-28"))
+                .build();
+
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.patch("/employee/1/title")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(titleModel));
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void doGetManager_success() throws Exception {
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.get("/employee/1/manager/A001")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+    }
+
+    @Test
+    public void doGetAllManager_success() throws Exception {
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.get("/employee/1/manager/all")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+    }
+
+    @Test
+    public void doCreateManager_success() throws Exception {
+
+        DepartmentManagerModel departmentManagerModel = DepartmentManagerModel.builder()
+                .fromDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-07-28"))
+                .toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-08-28"))
+                .build();
+
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.post("/employee/1/manager/A002")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(departmentManagerModel));
+
+        mockMvc.perform(mockReq).andExpect(status().isCreated());
+    }
+
+    @Test
+    public void doUpdateManager_success() throws Exception {
+
+        DepartmentManagerModel departmentManagerModel = DepartmentManagerModel.builder()
+                .toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-05-28"))
+                .build();
+
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.patch("/employee/1/manager/A001")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(departmentManagerModel));
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void doGetDepartmentEmployee_success() throws Exception {
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.get("/employee/1/department/A001")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+    }
+
+    @Test
+    public void doGetAllDepartmentEmployee_success() throws Exception {
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.get("/employee/1/department/all")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+    }
+
+    @Test
+    public void doCreateDepartmentEmployee_success() throws Exception {
+
+        DepartmentEmployeeModel departmentEmployeeModel = DepartmentEmployeeModel.builder()
+                .fromDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-03-28"))
+                .toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-04-28"))
+                .build();
+
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.post("/employee/1/department/A002")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(departmentEmployeeModel));
+
+        mockMvc.perform(mockReq).andExpect(status().isCreated());
+    }
+
+    @Test
+    public void doUpdateDepartmentEmployee_success() throws Exception {
+
+        DepartmentEmployeeModel departmentEmployeeModel = DepartmentEmployeeModel.builder()
+                .toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-05-28"))
+                .build();
+
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.patch("/employee/1/department/A001")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(departmentEmployeeModel));
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+    }
+
+    @Test
+    public void doGetAllDepartment_success() throws Exception {
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.get("/department/all")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void doGetDepartment_success() throws Exception {
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.get("/department/A001")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(mockReq).andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void doAddDepartment_success() throws Exception {
+
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.post("/department")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(this.department));
+
+        mockMvc.perform(mockReq).andExpect(status().isCreated());
+
+    }
+
+    @Test
+    public void doUpdateDepartment_success() throws Exception {
+
+        MockHttpServletRequestBuilder mockReq = MockMvcRequestBuilders.patch("/department/A001")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(this.employee));
 
         mockMvc.perform(mockReq).andExpect(status().isOk());
 

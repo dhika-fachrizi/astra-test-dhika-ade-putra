@@ -100,8 +100,8 @@ public class DepartmentEmployeeServiceImpl implements DepartmentEmployeeService 
                 .findById(departmentEmployeeId)
                 .orElse(null);
 
-        departmentEmployee.setFromDate(request.getFromDate());
-        departmentEmployee.setToDate(request.getToDate());
+        if (request.getFromDate() != null) departmentEmployee.setFromDate(request.getFromDate());
+        if (request.getToDate() != null) departmentEmployee.setToDate(request.getToDate());
 
         return departmentEmployeeRepository.save(departmentEmployee);
     }

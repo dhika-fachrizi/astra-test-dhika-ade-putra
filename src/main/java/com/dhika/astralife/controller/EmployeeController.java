@@ -319,7 +319,7 @@ public class EmployeeController {
     @PatchMapping("/{idEmp}/manager/{idDept}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseModel<DepartmentManagerModel> doUpdateManager(@PathVariable("idEmp") Integer idEmp
-            , @PathVariable("idDept") String idDept, @Valid @RequestBody DepartmentManagerModel request){
+            , @PathVariable("idDept") String idDept,@RequestBody DepartmentManagerModel request){
         DepartmentManagerEntity departmentManager = departmentManagerService.updateDepartmentManager(idEmp, idDept, request);
 
         return ResponseModel.<DepartmentManagerModel>builder()
@@ -383,7 +383,7 @@ public class EmployeeController {
     @PatchMapping("/{idEmp}/department/{idDept}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseModel<DepartmentEmployeeModel> doUpdateDepartment(@PathVariable("idEmp") Integer idEmp
-            , @PathVariable("idDept") String idDept, @Valid @RequestBody DepartmentEmployeeModel request){
+            , @PathVariable("idDept") String idDept,@RequestBody DepartmentEmployeeModel request){
         DepartmentEmployeeEntity departmentEmployee = departmentEmployeeService.updateDepartmentEmployee(idEmp, idDept, request);
 
         return ResponseModel.<DepartmentEmployeeModel>builder()

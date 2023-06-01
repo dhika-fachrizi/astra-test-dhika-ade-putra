@@ -1,10 +1,7 @@
 package com.dhika.astralife;
 
 import com.dhika.astralife.entity.EmployeeEntity;
-import com.dhika.astralife.model.DepartmentModel;
-import com.dhika.astralife.model.EmployeeModel;
-import com.dhika.astralife.model.GenderEnumModel;
-import com.dhika.astralife.model.SalaryModel;
+import com.dhika.astralife.model.*;
 import com.dhika.astralife.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -38,7 +35,7 @@ public class AstralifeApplication implements CommandLineRunner {
 	public void run(String...args) throws Exception {
 		//initial Employee data
 
-		if(employeeService.getAllEmployee().size() == 0){
+		if(employeeService.getAllEmployee().size() == 0 && departmentService.getAllDepartment().size() == 0){
 			EmployeeModel employee = EmployeeModel.builder()
 					.employeeNo(1)
 					.firstName("dhika")
@@ -52,17 +49,46 @@ public class AstralifeApplication implements CommandLineRunner {
 			SalaryModel salaryModel = SalaryModel.builder()
 					.salary(10000000)
 					.fromDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-02-28"))
-					.toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-02-28"))
+					.toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-03-28"))
 					.build();
 			salaryService.createSalaryByEmployee(employee.getEmployeeNo(),salaryModel);
-		}
 
-		if (departmentService.getAllDepartment().size() == 0){
+			TitleModel titleModel = TitleModel.builder()
+					.title("Senior Programmer")
+					.fromDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-02-28"))
+					.toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-04-28"))
+					.build();
+			titleService.createTitleByEmployee(employee.getEmployeeNo(),titleModel);
+
 			DepartmentModel departmentModel = DepartmentModel.builder()
-					.departmentNo("AST1")
+					.departmentNo("A001")
 					.departmentName("IT Security")
 					.build();
 			departmentService.createDepartment(departmentModel);
+
+			DepartmentModel departmentModel2 = DepartmentModel.builder()
+					.departmentNo("A002")
+					.departmentName("IT Security")
+					.build();
+			departmentService.createDepartment(departmentModel2);
+
+			DepartmentManagerModel departmentManagerModel = DepartmentManagerModel.builder()
+					.fromDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-02-28"))
+					.toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-04-28"))
+					.build();
+
+			departmentManagerService.createDepartmentManager(employee.getEmployeeNo()
+					, departmentModel.getDepartmentNo()
+					, departmentManagerModel);
+
+			DepartmentEmployeeModel departmentEmployeeModel = DepartmentEmployeeModel.builder()
+					.fromDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-02-28"))
+					.toDate(new SimpleDateFormat("yyyy-MM-dd").parse("2023-04-28"))
+					.build();
+
+			departmentEmployeeService.createDepartmentEmployee(employee.getEmployeeNo()
+					, departmentModel.getDepartmentNo()
+					, departmentEmployeeModel);
 		}
 
 

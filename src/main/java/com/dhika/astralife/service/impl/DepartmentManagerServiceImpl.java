@@ -101,8 +101,8 @@ public class DepartmentManagerServiceImpl implements DepartmentManagerService {
                 .findById(departmentManagerId)
                 .orElse(null);
 
-        departmentManager.setFromDate(request.getFromDate());
-        departmentManager.setToDate(request.getToDate());
+        if (request.getFromDate() != null) departmentManager.setFromDate(request.getFromDate());
+        if (request.getToDate() != null) departmentManager.setToDate(request.getToDate());
 
         return departmentManagerRepository.save(departmentManager);
     }

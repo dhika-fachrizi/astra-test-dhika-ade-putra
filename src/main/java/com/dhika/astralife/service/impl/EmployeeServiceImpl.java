@@ -68,10 +68,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeEntity updateEmployee(Integer id, EmployeeModel request) {
 
         EmployeeEntity employee = checkEmployee(id);
-        request.setEmployeeNo(employee.getEmployeeNo());
-        ModelMapper modelMapper = new ModelMapper();
-        EmployeeEntity addEmployee = modelMapper.map(request, EmployeeEntity.class);
-        return employeeRepository.save(addEmployee);
+        if (request.getHireDate() != null) employee.setHireDate(request.getHireDate());
+        if (request.getGender() != null) employee.setGender(request.getGender());
+        if (request.getFirstName() != null) employee.setFirstName(request.getFirstName());
+        if (request.getLastName() != null) employee.setLastName(request.getLastName());
+
+        return employeeRepository.save(employee);
     }
 
     @Override
