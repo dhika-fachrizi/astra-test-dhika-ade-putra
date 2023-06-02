@@ -37,24 +37,7 @@ public class DepartmentModelAssembler extends RepresentationModelAssemblerSuppor
                     methodOn(DepartmentController.class)
                             .doGetDepartment(entity.getDepartmentNo()))
                     .withSelfRel());
-
-            if (entity.getDepEmp() != null) {
-                if (entity.getDepEmp().size() > 0) {
-                    departmentModel.add(linkTo(
-                            methodOn(EmployeeController.class)
-                                    .doGetDepartment(entity.getDepEmp().get(0).getEmployee().getEmployeeNo(), entity.getDepartmentNo()))
-                            .withRel("department_employee"));
-                }
-            }
-
-            if (entity.getDeptManager() != null) {
-                if (entity.getDeptManager().size() > 0) {
-                    departmentModel.add(linkTo(
-                            methodOn(EmployeeController.class)
-                                    .doGetManager(entity.getDeptManager().get(0).getEmployee().getEmployeeNo(), entity.getDepartmentNo()))
-                            .withRel("department_manager"));
-                }
-            }
+            
             return departmentModel;
         }else {
             return null;
